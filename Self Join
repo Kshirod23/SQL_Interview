@@ -1,0 +1,20 @@
+Q1. Get Employee Name whose salary is greater than Manager Salary ?
+
+CREATE TABLE employees_tbl (empid INT,
+                            ename VARCHAR(50),
+                            salary INT,
+                            managerid INT);
+
+INSERT INTO employees_tbl VALUES (1, 'John', 50000, NULL), 
+                                 (2, 'Alice', 40000, 1),
+                                 (3, 'Bob', 70000, 1), 
+                                 (4, 'Emily', 55000, NULL), 
+                                 (5, 'Charlie', 65000, 4),
+                                 (6, 'David', 50000, 4);
+SELECT * FROM employees_tbl;
+
+select e1.ename as employee_name,e1.salary as employee_salary,e2.ename as manager_name,e2.salary as manager_salary
+from employees_tbl e1 join employees_tbl e2
+on e1.managerid=e2.empid
+where e1.salary> e2.salary;
+
