@@ -13,4 +13,16 @@ SELECT * FROM salesdata;
 with cte as (
 select *,lag(ytd_sales,1,0) over(order by monthnum asc) as lagsales from salesdata ) 
 select month,ytd_sales,(ytd_sales-lagsales) as periodicsales from cte;
+------------------------------------------------------------------------------------------
+--UST Global SQL Interview Question - LAG & LEAD Functions
+create table cinema_tbl (seat_id int, 
+                         free int);
+insert into cinema_tbl values (1,1),(2,0),(3,1),(4,0),(5,1),(6,1),(7,1),(8,0),(9,1),(10,1);
+select * from cinema_tbl;
 
+
+with cte as (
+select *,(lag(free,1,0) over(order by seat_id)* free) as previous_seat,
+(lead(free,1,0) over(order by seat_id)* free) as next_seat
+from cinema_tbl)
+select seat_id from cte where previous_seat=1 or next_seat=1;
